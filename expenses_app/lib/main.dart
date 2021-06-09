@@ -23,6 +23,14 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('MyExpenses'),
+          actions: <Widget>[
+            IconButton(onPressed: () {}, icon: Icon(Icons.add))
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.add),
         ),
         body: SingleChildScrollView(child: UserTransactions()));
   }

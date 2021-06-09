@@ -6,6 +6,14 @@ class NewTransaction extends StatelessWidget {
   final Function addTx;
 
   NewTransaction(this.addTx);
+  void submitData() {
+    final titleText = titleController.text;
+    final amountText = double.parse(amountController.text);
+    if (titleText.isEmpty || amountText <= 0) {
+      return;
+    }
+    addTx(titleText, amountText);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +28,18 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
+              keyboardType: TextInputType.text,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: amountController,
-            ),
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => submitData()),
             ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.white)),
-                onPressed: () {
-                  addTx(titleController.text,
-                      double.parse(amountController.text));
-                },
+                onPressed: submitData,
                 child: Text(
                   'Add Transaction',
                   style: TextStyle(color: Colors.amber),

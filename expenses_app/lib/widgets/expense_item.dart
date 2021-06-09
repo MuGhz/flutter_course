@@ -21,7 +21,7 @@ class ExpenseItem extends StatelessWidget {
                 width: 1.0,
               ),
             ),
-            child: Text(transaction.amount.toString(),
+            child: Text('Rp.${transaction.amount.toStringAsFixed(2)}',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -35,7 +35,7 @@ class ExpenseItem extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               Text(
-                DateFormat('dd-MM-yyyy').format(transaction.time),
+                DateFormat('dd-MMM-yyyy').format(transaction.time),
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
               )
             ],
