@@ -8,7 +8,10 @@ class NewTransaction extends StatelessWidget {
   NewTransaction(this.addTx);
   void submitData() {
     final titleText = titleController.text;
-    final amountText = double.parse(amountController.text);
+    final amountText = amountController.text.isNotEmpty
+        ? double.parse(amountController.text)
+        : 0;
+    print(titleText + " ---- ${amountText}");
     if (titleText.isEmpty || amountText <= 0) {
       return;
     }
@@ -20,7 +23,6 @@ class NewTransaction extends StatelessWidget {
     return Card(
       elevation: 5,
       child: Container(
-        margin: EdgeInsets.all(8),
         padding: EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -34,7 +36,7 @@ class NewTransaction extends StatelessWidget {
             TextField(
                 decoration: InputDecoration(labelText: 'Amount'),
                 controller: amountController,
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
                 onSubmitted: (_) => submitData()),
             ElevatedButton(
                 style: ButtonStyle(
