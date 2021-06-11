@@ -11,7 +11,13 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'MyExpenses App', home: HomePage());
+    return MaterialApp(
+        title: 'MyExpenses App',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+          accentColor: Colors.greenAccent,
+        ),
+        home: HomePage());
   }
 }
 
@@ -43,6 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: ctx,
         builder: (_) {
           return GestureDetector(
@@ -60,7 +67,10 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             IconButton(
                 onPressed: () => _startAddNewTransaction(context),
-                icon: Icon(Icons.add))
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ))
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
