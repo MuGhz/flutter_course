@@ -1,3 +1,5 @@
+import 'package:expenses_app/widgets/chart.dart';
+
 import './models/transaction.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
@@ -27,14 +29,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-        id: '1',
-        title: 'Food and Drinks',
-        amount: 10000.0,
-        time: DateTime.now()),
-    Transaction(id: '2', title: 'Books', amount: 45000.0, time: DateTime.now())
-  ];
+  List<Transaction> _transactions = [];
 
   void _addTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -59,6 +54,12 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  List<Transaction> get _recentTransaction {
+    return _transactions.where((tx) {
+      return tx.time.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,21 +68,24 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             IconButton(
                 onPressed: () => _startAddNewTransaction(context),
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ))
+                icon: Icon(Icons.add))
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _startAddNewTransaction(context),
-          child: Icon(Icons.add),
+        floatingActionButton: Padding(
+          padding: EdgeInsets.only(bottom: 16),
+          child: FloatingActionButton(
+            onPressed: () => _startAddNewTransaction(context),
+            child: Icon(Icons.add),
+          ),
         ),
         body: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[TransactionList(_transactions)],
+          children: <Widget>[
+            Chart(_recentTransaction),
+            TransactionList(_transactions)
+          ],
         )));
   }
 }
