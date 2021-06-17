@@ -1,3 +1,4 @@
+import 'package:expenses_app/widgets/chart.dart';
 import 'package:expenses_app/widgets/expense_item.dart';
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';

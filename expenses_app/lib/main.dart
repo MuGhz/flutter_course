@@ -4,7 +4,6 @@ import './models/transaction.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -83,7 +82,9 @@ class _HomePageState extends State<HomePage> {
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransaction),
+            Chart(
+              _recentTransaction,
+            ),
             TransactionList(_transactions)
           ],
         )));
