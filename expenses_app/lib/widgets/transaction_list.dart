@@ -5,12 +5,13 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  TransactionList(this.transactions);
+  Function deleteTx;
+  TransactionList(this.transactions, this.deleteTx);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 400,
       padding: EdgeInsets.only(top: 40),
       child: transactions.isEmpty
           ? Column(
@@ -31,7 +32,10 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
-                return ExpenseItem(transaction: transactions[index]);
+                return ExpenseItem(
+                  transaction: transactions[index],
+                  deleteTx: deleteTx,
+                );
               },
               itemCount: transactions.length,
             ),

@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 
 class ExpenseItem extends StatelessWidget {
   Transaction transaction;
-  ExpenseItem({@required this.transaction});
+  Function deleteTx;
+  ExpenseItem({@required this.transaction, this.deleteTx});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,11 @@ class ExpenseItem extends StatelessWidget {
         ),
         title: Text(transaction.title),
         subtitle: Text(DateFormat.yMMMd().format(transaction.time)),
+        trailing: IconButton(
+          icon: Icon(Icons.delete),
+          color: Colors.red,
+          onPressed: () => deleteTx(transaction.id),
+        ),
       ),
     );
   }

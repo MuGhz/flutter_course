@@ -9,6 +9,7 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('name $name amount $amount total $total');
     return Column(children: <Widget>[
       Container(
           height: 20,
@@ -30,11 +31,15 @@ class ChartBar extends StatelessWidget {
                     color: Color.fromRGBO(220, 220, 220, 1),
                     borderRadius: BorderRadius.circular(8)),
               ),
-              FractionallySizedBox(
-                heightFactor: total,
-                child: Container(
-                  decoration:
-                      BoxDecoration(color: Theme.of(context).primaryColor),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: FractionallySizedBox(
+                  heightFactor: total,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
                 ),
               ),
               SizedBox(
