@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addTx;
@@ -11,8 +12,8 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
-
   final amountController = TextEditingController();
+  DateTime _selectedDate;
 
   void submitData() {
     final titleText = titleController.text;
@@ -25,6 +26,22 @@ class _NewTransactionState extends State<NewTransaction> {
     }
     widget.addTx(titleText, amountText);
     Navigator.of(context).pop();
+  }
+
+  void _presentDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2021),
+            lastDate: DateTime.now())
+        .then((date) {
+      if (date == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = date;
+      });
+    });
   }
 
   @override
@@ -50,14 +67,33 @@ class _NewTransactionState extends State<NewTransaction> {
                     controller: amountController,
                     keyboardType: TextInputType.number,
                     onSubmitted: (_) => submitData()),
+                Container(
+                    height: 70,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(_selectedDate == null
+                              ? 'No Date Chosen!'
+                              : 'Date:${DateFormat.yMMMd().format(_selectedDate)}'),
+                        ),
+                        FlatButton(
+                          textColor: Colors.amber,
+                          child: Text(
+                            'Choose Date',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: _presentDatePicker,
+                        )
+                      ],
+                    )),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.white)),
+                            MaterialStateProperty.all(Colors.amber)),
                     onPressed: submitData,
                     child: Text(
                       'Add Transaction',
-                      style: TextStyle(color: Colors.amber),
+                      style: TextStyle(color: Colors.white),
                     ))
               ],
             ),
